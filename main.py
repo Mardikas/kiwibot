@@ -1,11 +1,18 @@
 # https://github.com/Rapptz/discord.py/blob/async/examples/reply.py
-import discord
-import parser
 
 # https://github.com/Rapptz/discord.py/blob/async/examples/reply.py
 import discord
+import token_read
+import sys
+import parser
 
-TOKEN =
+try:
+    TOKEN = token_read.read()
+except:
+    print('Failed to read token')
+    sys.exit(1)
+else:
+    print('Token read success!')
 
 client = discord.Client()
 
@@ -19,6 +26,8 @@ async def on_message(message):
         msg = 'Hello {0.author.mention}'.format(message)
         await client.send_message(message.channel, msg)
         await client.send_message(message.channel, 'whats up')
+    print('Messages received in current session', len(client.messages))
+    parser.parse(message)
 
 @client.event
 async def on_ready():
@@ -27,4 +36,6 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
+client.close()
+print('Connecting to client...')
 client.run(TOKEN)
