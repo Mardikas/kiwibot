@@ -4,7 +4,7 @@
 import discord
 import token_read
 import sys
-import parser
+import messageparser
 
 try:
     TOKEN = token_read.read()
@@ -27,7 +27,7 @@ async def on_message(message):
         await client.send_message(message.channel, msg)
         await client.send_message(message.channel, 'whats up')
     print('Messages received in current session', len(client.messages))
-    parser.parse(message)
+    messageparser.parse(message)
 
 @client.event
 async def on_ready():
