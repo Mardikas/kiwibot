@@ -15,7 +15,7 @@ def message_handle(message, kiwi):
 
     action = messageparser.parse(message)
     if action.type == 'simple_reply':
-        response.messages_to_send.append(action.data[0])
+        response.messages_to_send.append(action.simple_reply)
         response.should_respond = True
     # if message.content.startswith('!hello'):
     #    response.messages_to_send.append('Hello {0.author.mention}'.format(message))

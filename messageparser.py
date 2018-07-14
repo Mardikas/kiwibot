@@ -10,7 +10,6 @@ class Parse_result():
 
     def __init__(self):
         self.type = None
-        self.data = []
 
 
 def parse(message=None):
@@ -27,7 +26,7 @@ def parse(message=None):
         reply = simple_replies.get(message.content.lower())
         reply = reply[random.randint(0, len(reply) - 1)]
         parse_result.type = 'simple_reply'
-        parse_result.data.append(reply)
+        parse_result.simple_reply = reply
     return (parse_result)
 
 
