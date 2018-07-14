@@ -1,0 +1,7 @@
+{
+  "!hello": ["Hello {0.author.mention}.format(message)", "yo", "Howdy!"],
+  "!sup": ["not much"],
+  "what's your name?": ["I'm Kiwibot!", "Kiwi"],
+  "hey kiwi": ["Yo", "Hey man", "Yes?"],
+  "kiwi": ["Yes?", "I'm here"]
+}

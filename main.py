@@ -4,7 +4,7 @@
 import discord
 import token_read
 import sys
-import messageparser
+import message_handler
 
 try:
     TOKEN = token_read.read()
@@ -16,18 +16,16 @@ else:
 
 client = discord.Client()
 
+
 @client.event
 async def on_message(message):
-    # we do not want the bot to reply to itself
-    if message.author == client.user:
-        return
+    response = message_handler.message_handle(message, client.user)
+    if response.should_respond is True:
+        for msg in response.messages_to_send:
+            await client.send_message(message.channel, msg)
 
-    if message.content.startswith('!hello'):
-        msg = 'Hello {0.author.mention}'.format(message)
-        await client.send_message(message.channel, msg)
-        await client.send_message(message.channel, 'whats up')
     print('Messages received in current session', len(client.messages))
-    messageparser.parse(message)
+
 
 @client.event
 async def on_ready():
@@ -35,6 +33,7 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+
 
 client.close()
 print('Connecting to client...')
