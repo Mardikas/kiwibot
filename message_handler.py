@@ -1,5 +1,6 @@
 import messageparser
 
+
 class Response:
     def __init__(self):
         self.should_respond = False
@@ -16,9 +17,8 @@ def message_handle(message, kiwi):
     if action.type == 'simple_reply':
         response.messages_to_send.append(action.data[0])
         response.should_respond = True
-   # if message.content.startswith('!hello'):
+    # if message.content.startswith('!hello'):
     #    response.messages_to_send.append('Hello {0.author.mention}'.format(message))
-      #  #response.messages_to_send.append('Hello {0.author.mention}')
-     #   response.should_respond = True
+    #  #response.messages_to_send.append('Hello {0.author.mention}')
+    #   response.should_respond = True
     return response
-
