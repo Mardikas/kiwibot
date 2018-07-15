@@ -5,6 +5,7 @@ import discord
 import token_read
 import sys
 import message_handler
+import asyncio
 
 try:
     TOKEN = token_read.read()
@@ -19,6 +20,7 @@ client = discord.Client()
 
 @client.event
 async def on_message(message):
+    await client.wait_until_ready()
     response = message_handler.message_handle(message, client.user)
     if response.should_respond is True:
         for msg in response.messages_to_send:
@@ -29,12 +31,28 @@ async def on_message(message):
 
 @client.event
 async def on_ready():
+    await client.wait_until_ready()
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
     print('------')
 
 
-client.close()
-print('Connecting to client...')
-client.run(TOKEN)
+@asyncio.coroutine
+async def connect():
+    loop = asyncio.get_event_loop()
+    try:
+        print('Connecting to client...')
+        client.start(TOKEN)
+        await client.on_ready()
+        # client.login(TOKEN)
+        # client.connect()
+        print("Success")
+    except KeyboardInterrupt:
+        loop.run_until_complete(client.logout())
+    # finally:a
+    #    loop.close()
+    print("shouldn't reach here")
+
+
+connect()
